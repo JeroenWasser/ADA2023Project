@@ -1,4 +1,3 @@
-aenum
 flask
 sqlalchemy
 sqlalchemy-utils
