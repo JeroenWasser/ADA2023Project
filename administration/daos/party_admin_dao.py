@@ -1,6 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Enum
-
-from enum.status_enum import StatusEnum
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 
 from db import Base
 
