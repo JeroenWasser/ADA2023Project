@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements_prod.txt
 # Copy all files in training-db local host directory to /usr/src/myapp in Docker container
 COPY . .
 # Expose the port that our app runs in
-EXPOSE 5000
+EXPOSE 3000
 # Enviroment Variables
 ENV DB_URL  bigquery://votingadaproject/administration_service_db
 # Run our App
