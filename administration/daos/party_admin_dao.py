@@ -11,7 +11,7 @@ class PartyAdminDAO(Base):
 
     first_name = Column(String)
     last_name = Column(String)
-    status = Column(Enum(StatusEnum))
+    status = Column(String)
     uuid = Column(String)
 
     created_at = Column(DateTime)

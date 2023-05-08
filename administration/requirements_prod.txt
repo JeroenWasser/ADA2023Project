@@ -1,5 +1,5 @@
+aenum
 flask
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
-enum
