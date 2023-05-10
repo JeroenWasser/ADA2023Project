@@ -7,7 +7,7 @@
   "output_encoding": "json",
   "endpoints": [
     {
-      "endpoint": "/v1/voting/{id}",
+      "endpoint": "/v1/sessions",
       "method": "GET",
       "output_encoding": "json",
       "backend": [
@@ -17,7 +17,7 @@
           "sd": "static",
           "method": "GET",
           "host": [
-            "administration-app"
+            "https://administration-serv-lf6x6a722q-uc.a.run.app"
           ],
           "disable_host_sanitize": false
         }

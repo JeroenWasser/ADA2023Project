@@ -13,10 +13,10 @@ services:
   #   ports:
   #     - "8081:8080"
   #   restart: always
-  administration-app:
-    build: "./services/administration"
-    container_name: administration-app
-    ports:
-      - "3000:3000"
-    restart: always
+  # administration-app:
+  #   build: "./services/administration"
+  #   container_name: administration-app
+  #   ports:
+  #     - "3000:3000"
+  #   restart: always
   
