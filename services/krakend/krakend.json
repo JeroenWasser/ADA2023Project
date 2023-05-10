@@ -1,0 +1,27 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "name": "KrakenD - API Gateway",
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "endpoints": [
+    {
+      "endpoint": "/v1/voting/{id}",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/sessions",
+          "encoding": "json",
+          "sd": "static",
+          "method": "GET",
+          "host": [
+            "administration-app"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ]
+}

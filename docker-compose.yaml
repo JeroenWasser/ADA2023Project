@@ -1,0 +1,22 @@
+services:
+  krakend:
+    image: devopsfaith/krakend:latest
+    container_name: krakend
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - ./services/krakend:/etc/krakend
+  # voting-app:
+  #   build: services/voting
+  #   image: 
+  #   ports:
+  #     - "8081:8080"
+  #   restart: always
+  administration-app:
+    build: "./services/administration"
+    container_name: administration-app
+    ports:
+      - "3000:3000"
+    restart: always
+  
