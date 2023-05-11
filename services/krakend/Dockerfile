@@ -4,7 +4,8 @@ FROM devopsfaith/krakend
 COPY krakend.json /etc/krakend/krakend.json
 
 # Expose the port on which KrakenD will listen
-EXPOSE 8080
+EXPOSE 8090
 
 # Set the entrypoint command to start KrakenD
-CMD ["/usr/local/bin/krakend", "run", "-c", "/etc/krakend/krakend.json"]
+ENTRYPOINT [ "/usr/bin/krakend" ]
+CMD [ "run", "-c", "/etc/krakend/krakend.json" ]
