@@ -1,0 +1,46 @@
+from datetime import datetime
+
+from flask import jsonify
+
+from daos.party_information_dao import PartyInformationDAO
+from db import Session
+
+
+class PartyInformation:
+    @staticmethod
+    def get(p_id):
+        session = Session()
+        # https://docs.sqlalchemy.org/en/14/orm/query.html
+        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
+        party_information = session.query(PartyInformationDAO).filter(PartyInformationDAO.party_id == p_id).first()
+
+        if party_information:
+            text_out = {
+                "description": party_information.description,
+                "created_at": party_information.created_at,
+                "edited_at": party_information.edited_at
+            }
+            session.close()
+            return jsonify(text_out), 200
+        else:
+            session.close()
+            return jsonify({'message': f'There is no Party Information for party with id {p_id}'}), 404
+        
+    @staticmethod
+    def create(p_id, body):
+        session = Session()
+        party_information = PartyInformationDAO(body['description'], p_id, datetime.now(), datetime.now())
+        session.add(party_information)
+        session.commit()
+        session.refresh(party_information)
+        session.close()
+        return jsonify({'party_information_id': party_information.id}), 200
+
+    @staticmethod
+    def update(p_id, body):
+        session = Session()
+        party_information = session.query(PartyInformationDAO).filter(PartyInformationDAO.party_id == p_id).first()
+        party_information.description = body['description']
+        party_information.edited_at = datetime.now()
+        session.commit()
+        return jsonify({'message': 'The party information was updated'}), 200
