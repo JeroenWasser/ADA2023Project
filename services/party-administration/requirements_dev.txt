@@ -1,5 +1,5 @@
-enum
 flask
+flask_httpauth
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
