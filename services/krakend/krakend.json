@@ -1,27 +1,24 @@
 {
-  "$schema": "https://www.krakend.io/schema/v3.json",
-  "version": 3,
-  "name": "Voting API Gateway",
-  "timeout": "3000ms",
-  "cache_ttl": "300s",
-  "output_encoding": "json",
-  "endpoints": [
-    {
-      "endpoint": "/v1/sessions",
-      "method": "GET",
-      "output_encoding": "json",
-      "backend": [
-        {
-          "url_pattern": "/sessions",
-          "encoding": "json",
-          "sd": "static",
-          "method": "GET",
-          "host": [
-            "https://administration-serv-lf6x6a722q-uc.a.run.app"
-          ],
-          "disable_host_sanitize": false
-        }
-      ]
-    }
-  ]
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "name": "Voting API Gateway",
+    "timeout": "3000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "json",
+    "port": 8090,
+    "endpoints": [{
+        "endpoint": "/v1/sessions",
+        "method": "GET",
+        "output_encoding": "json",
+        "backend": [{
+            "url_pattern": "/sessions",
+            "encoding": "json",
+            "sd": "static",
+            "method": "GET",
+            "host": [
+                "https://administration-serv-lf6x6a722q-uc.a.run.app"
+            ],
+            "disable_host_sanitize": false
+        }]
+    }]
 }
