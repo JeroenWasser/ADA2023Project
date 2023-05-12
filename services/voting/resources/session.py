@@ -5,6 +5,8 @@ from flask import jsonify
 from daos.session_dao import SessionDAO
 from db import Session
 from sqlalchemy import desc
+import uuid
+
 
 
 
@@ -62,3 +64,20 @@ class Session:
             session.close()
             return jsonify({'message': f'There are no sessions'}), 404
     
+    @staticmethod
+    def create(vote_session_json):
+        session = Session()
+        voting_session = SessionDAO(vote_session_json.id,
+                                        vote_session_json.name, 
+                                        vote_session_json.start_time, 
+                                        vote_session_json.end_time,
+                                        vote_session_json.created_at,
+                                        vote_session_json.edited_at,
+                                        vote_session_json.uuid)
+        session_object = session.add(voting_session)
+        if session_object:
+            session.close()
+            return jsonify({'message': f'{vote_session_json.uuid} successfully inserted'}), 200
+        else:
+            session.close()
+            return jsonify({'message': 'Could not insert insert session'}), 500
