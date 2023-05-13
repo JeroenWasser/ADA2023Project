@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 from db import Base, engine
 from resources.party import Party
@@ -8,6 +8,10 @@ from resources.party import Party
 app = Flask(__name__)
 app.config["DEBUG"] = True
 Base.metadata.create_all(engine)
+
+@app.route('/', methods=['GET'])
+def get_test():
+    return jsonify({'message': f'The standard endpoint works'}), 200
 
 
 # @app.route('/parties', methods=['POST'])
