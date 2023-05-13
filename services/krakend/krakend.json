@@ -17,7 +17,8 @@
           "sd": "static",
           "method": "GET",
           "host": [
-            "https://administration-serv-lf6x6a722q-uc.a.run.app"
+            "https://administration-serv-lf6x6a722q-uc.a.run.app",
+            "/"
           ],
           "disable_host_sanitize": false
         }
