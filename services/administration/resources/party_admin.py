@@ -6,7 +6,7 @@ from daos.party_admin_dao import PartyAdminDAO
 from db import Session
 
 
-class Party:
+class PartyAdmin:
     # @staticmethod
     # def create(body):
         # session = Session()
