@@ -37,12 +37,12 @@ class Party:
     @staticmethod
     def create(body):
         session = Session()
-        voting_session = PartyDAO(body['name'], datetime.now(), datetime.now())
-        session.add(voting_session)
+        party = PartyDAO(body['name'], datetime.now(), datetime.now())
+        session.add(party)
         session.commit()
-        session.refresh(voting_session)
+        session.refresh(party)
         session.close()
-        return jsonify({'voting_session_id': voting_session.id}), 200
+        return jsonify({'voting_session_id': party.id}), 200
     
     @staticmethod
     def update(p_id, body):
