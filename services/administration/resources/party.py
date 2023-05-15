@@ -42,7 +42,7 @@ class Party:
         session.commit()
         session.refresh(party)
         session.close()
-        return jsonify({'voting_session_id': party.id}), 200
+        return jsonify({'party_id': party.id}), 200
     
     @staticmethod
     def update(p_id, body):
