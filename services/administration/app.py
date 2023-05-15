@@ -20,6 +20,10 @@ def get_test():
 
 @app.route('/sessions/<vs_id>', methods=['GET'])
 def get_voting_session(vs_id):
+    try:
+        vs_id = int(vs_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     return VotingSession.get(vs_id)
 
 @app.route('/sessions/', methods=['GET'])
@@ -33,11 +37,19 @@ def create_voting_session():
 
 @app.route('/sessions/<vs_id>', methods=['PUT'])
 def update_voting_session(vs_id):
+    try:
+        vs_id = int(vs_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     body = request.json
     return VotingSession.update(vs_id, body)
 
 @app.route('/sessions/<vs_id>', methods=['DELETE'])
 def delete_voting_session(vs_id):
+    try:
+        vs_id = int(vs_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     return VotingSession.delete(vs_id)
 
 @app.route('/party/placeholder', methods=['POST'])
@@ -47,16 +59,28 @@ def create_placeholder_party(body):
 
 @app.route('/party/<p_id>/admin', methods=['POST'])
 def create_party_admin(p_id, body):
+    try:
+        p_id = int(p_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     body = request.json
     return PartyAdmin.create(p_id, body)
 
 @app.route('/party/<p_id>', methods=['PUT'])
 def update_party(p_id):
+    try:
+        p_id = int(p_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     body = request.json
     return Party.update(p_id, body)
 
 @app.route('/party/<p_id>', methods=['DELETE'])
 def delete_party(p_id):
+    try:
+        p_id = int(p_id)
+    except ValueError:
+        return jsonify('id must be an integer', 500)
     return Party.delete(p_id)
 
 
