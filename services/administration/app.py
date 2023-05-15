@@ -65,7 +65,7 @@ def create_placeholder_party():
     return Party.create(body)
 
 @app.route('/party/<p_id>/admin', methods=['POST'])
-def create_party_admin(p_id, body):
+def create_party_admin(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
