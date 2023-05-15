@@ -10,6 +10,7 @@ class PartyDAO(Base):
     created_at = Column(DateTime)
     edited_at = Column(DateTime)
 
+
     def __init__(self, name, created_at, edited_at):
         self.name = name
         self.created_at = created_at

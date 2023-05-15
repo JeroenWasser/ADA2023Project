@@ -20,7 +20,7 @@ class Party:
         # return jsonify({'delivery_id': delivery.id}), 200
 
     @staticmethod
-    def get():
+    def get_all():
         session = Session()
         # https://docs.sqlalchemy.org/en/14/orm/query.html
         # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
@@ -35,3 +35,12 @@ class Party:
         else:
             session.close()
             return jsonify({'message': f'There are no parties'}), 404
+        
+    def create_placeholder(body):
+        session = Session()
+        voting_session = PartyDAO(body['name'], datetime.now(), datetime.now())
+        session.add(voting_session)
+        session.commit()
+        session.refresh(voting_session)
+        session.close()
+        return jsonify({'voting_session_id': voting_session.id}), 200
