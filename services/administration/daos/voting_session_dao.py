@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, ARRAY
 
 from db import Base
 
@@ -14,7 +14,8 @@ class VotingSessionDAO(Base):
     created_at = Column(DateTime)
     edited_at = Column(DateTime)
 
-    def __init__(self, name, start_time, end_time, created_at, edited_at):
+    def __init__(self, id, name, start_time, end_time, created_at, edited_at):
+        self.id = id
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
