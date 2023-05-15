@@ -12,6 +12,7 @@ class PartyDAO(Base):
 
 
     def __init__(self, name, created_at, edited_at):
+        self.id = id
         self.name = name
         self.created_at = created_at
         self.edited_at = edited_at
