@@ -28,7 +28,7 @@ def get_voting_session(vs_id):
         return jsonify('id must be an integer', 500)
     return VotingSession.get(vs_id)
 
-
+#Tested
 @app.route('/sessions/', methods=['GET'])
 def get_voting_sessions():
     return VotingSession.get_all()
