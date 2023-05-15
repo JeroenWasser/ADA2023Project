@@ -3,7 +3,8 @@ import os
 from flask import Flask, request, jsonify
 
 from db import Base, engine
-from resources.voting_session import VotingSession, PartyAdmin
+from resources.voting_session import VotingSession
+from resources.party_admin import PartyAdmin
 from resources.party import Party
 
 app = Flask(__name__)
