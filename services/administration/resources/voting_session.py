@@ -10,7 +10,7 @@ class VotingSession:
     @staticmethod
     def create(body):
         session = Session()
-        voting_session = VotingSessionDAO(body['name'], datetime.now(), body["end_time"], datetime.now(), datetime.now())
+        voting_session = VotingSessionDAO(body["id"], body['name'], datetime.now(), body["end_time"], datetime.now(), datetime.now())
         session.add(voting_session)
         session.commit()
         session.refresh(voting_session)
