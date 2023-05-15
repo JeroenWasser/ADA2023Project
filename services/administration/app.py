@@ -3,7 +3,7 @@ import os
 from flask import Flask, request, jsonify
 
 from db import Base, engine
-from resources.voting_session import VotingSession
+from resources.voting_session import VotingSession, PartyAdmin
 from resources.party import Party
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def get_voting_session(vs_id):
     return VotingSession.get(vs_id)
 
 @app.route('/sessions/', methods=['GET'])
-def get_voting_session():
+def get_voting_sessions():
     return VotingSession.get_all()
 
 @app.route('/sessions/create', methods=['POST'])
@@ -45,11 +45,19 @@ def create_placeholder_party(body):
     body = request.json
     return Party.create(body)
 
+@app.route('/party/<p_id>/admin', methods=['POST'])
+def create_party_admin(p_id, body):
+    body = request.json
+    return PartyAdmin.create(p_id, body)
 
+@app.route('/party/<p_id>', methods=['PUT'])
+def update_party(p_id):
+    body = request.json
+    return Party.update(p_id, body)
 
-
-
-
+@app.route('/party/<p_id>', methods=['DELETE'])
+def delete_party(p_id):
+    return Party.delete(p_id)
 
 
 if __name__ == '__main__':

@@ -36,7 +36,8 @@ class Party:
             session.close()
             return jsonify({'message': f'There are no parties'}), 404
         
-    def create_placeholder(body):
+    @staticmethod
+    def create(body):
         session = Session()
         voting_session = PartyDAO(body['name'], datetime.now(), datetime.now())
         session.add(voting_session)
@@ -44,3 +45,19 @@ class Party:
         session.refresh(voting_session)
         session.close()
         return jsonify({'voting_session_id': voting_session.id}), 200
+    
+    @staticmethod
+    def update(p_id, body):
+        session = Session()
+        effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).update(body)
+        session.commit()
+        session.close()
+        return jsonify({'effected_rows': effected_rows}), 200
+    
+    @staticmethod
+    def delete(p_id):
+        session = Session()
+        effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).delete()
+        session.commit()
+        session.close()
+        return jsonify({'effected_rows': effected_rows}), 200
