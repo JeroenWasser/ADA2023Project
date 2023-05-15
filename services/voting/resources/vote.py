@@ -5,21 +5,31 @@ from flask import jsonify
 from daos.vote_dao import VoteDAO
 from db import Session
 from sqlalchemy import desc
+import uuid
+
 
 
 
 class Vote:
-    # @staticmethod
-    # def create(body):
-        # session = Session()
-        # delivery = DeliveryDAO(body['customer_id'], body['provider_id'], body['package_id'], datetime.now(),
-        #                        datetime.strptime(body['delivery_time'], '%Y-%m-%d %H:%M:%S.%f'),
-        #                        StatusDAO(STATUS_CREATED, datetime.now()))
-        # session.add(delivery)
-        # session.commit()
-        # session.refresh(delivery)
-        # session.close()
-        # return jsonify({'delivery_id': delivery.id}), 200
+    @staticmethod
+    def create(body, session_id):
+        session = Session()
+        try:
+            vote_id = int(body["id"])
+        except:
+            return jsonify({'ID must be an integer'}, 500)
+        vote = VoteDAO(vote_id, str(uuid.uuid4()), body['voter_uuid'], session_id ,datetime.now(), body['member_uuid'])
+        print(vote)
+        print(type(vote))
+        try:
+            session.add(vote)
+            session.commit()
+            session.refresh(vote)
+            session.close()
+            return jsonify({'vote placed': 'succesfully'}), 200
+        except:
+            session.close()
+            return jsonify({'Could not place vote encountered error'}), 500
 
     @staticmethod
     def get_for_session(session_id):
@@ -31,7 +41,8 @@ class Vote:
         if len(votes) > 0:
             text_out = [{"uuid": vote.uuid, 
                          "voter_id": vote.voter_id,
-                         "created_at": session.created_at} for vote in votes]
+                         "created_at": session.created_at,
+                         "voted_for": vote.voted_for} for vote in votes]
             session.close()
             return jsonify(text_out), 200
         else:
