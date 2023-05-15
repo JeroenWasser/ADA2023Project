@@ -10,18 +10,7 @@ import uuid
 
 
 
-class Session:
-    # @staticmethod
-    # def create(body):
-        # session = Session()
-        # delivery = DeliveryDAO(body['customer_id'], body['provider_id'], body['package_id'], datetime.now(),
-        #                        datetime.strptime(body['delivery_time'], '%Y-%m-%d %H:%M:%S.%f'),
-        #                        StatusDAO(STATUS_CREATED, datetime.now()))
-        # session.add(delivery)
-        # session.commit()
-        # session.refresh(delivery)
-        # session.close()
-        # return jsonify({'delivery_id': delivery.id}), 200
+class Voting_Session:
 
     @staticmethod
     def get():
@@ -65,19 +54,21 @@ class Session:
             return jsonify({'message': f'There are no sessions'}), 404
     
     @staticmethod
-    def create(vote_session_json):
+    def create(body):
         session = Session()
-        voting_session = SessionDAO(vote_session_json.id,
-                                        vote_session_json.name, 
-                                        vote_session_json.start_time, 
-                                        vote_session_json.end_time,
-                                        vote_session_json.created_at,
-                                        vote_session_json.edited_at,
-                                        vote_session_json.uuid)
-        session_object = session.add(voting_session)
-        if session_object:
+        voting_session = SessionDAO(body["id"],
+                                        body["name"], 
+                                        body["start_time"], 
+                                        body["end_time"],
+                                        body["created_at"],
+                                        body["edited_at"],
+                                        body["uuid"])
+        try:
+            session.add(voting_session)
+            session.commit()
+            session.refresh(voting_session)
             session.close()
-            return jsonify({'message': f'{vote_session_json.uuid} successfully inserted'}), 200
-        else:
+            return jsonify({'voting session added with uuid': voting_session.uuid}), 200
+        except Exception as err:
             session.close()
-            return jsonify({'message': 'Could not insert insert session'}), 500
+            return jsonify({f'Could not create voting session encountered error: {err}'}), 500
