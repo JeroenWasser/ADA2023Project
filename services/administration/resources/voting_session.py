@@ -35,9 +35,7 @@ class VotingSession:
     @staticmethod
     def get_all():
         session = Session()
-        # https://docs.sqlalchemy.org/en/14/orm/query.html
-        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-        voting_sessions = session.query(VotingSession).all()
+        voting_sessions = session.query(VotingSessionDAO).all()
 
         if len(voting_sessions) > 0:
             text_out = [{

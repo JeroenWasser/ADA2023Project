@@ -19,6 +19,7 @@ def get_test():
 # def create_party_admin(p_id):
 #     return Delivery.get(d_id)
 
+#Tested
 @app.route('/sessions/<vs_id>', methods=['GET'])
 def get_voting_session(vs_id):
     try:
@@ -27,15 +28,18 @@ def get_voting_session(vs_id):
         return jsonify('id must be an integer', 500)
     return VotingSession.get(vs_id)
 
+
 @app.route('/sessions/', methods=['GET'])
 def get_voting_sessions():
     return VotingSession.get_all()
 
+#Tested
 @app.route('/sessions/create', methods=['POST'])
 def create_voting_session():
     body = request.json
     return VotingSession.create(body)
 
+#Tested
 @app.route('/sessions/<vs_id>', methods=['PUT'])
 def update_voting_session(vs_id):
     try:
@@ -45,6 +49,7 @@ def update_voting_session(vs_id):
     body = request.json
     return VotingSession.update(vs_id, body)
 
+#Tested
 @app.route('/sessions/<vs_id>', methods=['DELETE'])
 def delete_voting_session(vs_id):
     try:
@@ -53,8 +58,9 @@ def delete_voting_session(vs_id):
         return jsonify('id must be an integer', 500)
     return VotingSession.delete(vs_id)
 
+
 @app.route('/party/placeholder', methods=['POST'])
-def create_placeholder_party(body):
+def create_placeholder_party():
     body = request.json
     return Party.create(body)
 
