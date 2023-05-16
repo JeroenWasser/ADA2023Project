@@ -6,7 +6,8 @@ from db import Base, engine
 from resources.voting_session import VotingSession
 from resources.party_admin import PartyAdmin
 from resources.party import Party
-
+import random
+import requests
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -60,30 +61,33 @@ def delete_voting_session(vs_id):
     return VotingSession.delete(vs_id)
 
 
-@app.route('/party/placeholder', methods=['POST'])
+@app.route('/parties/placeholder', methods=['POST'])
 def create_placeholder_party():
     body = request.json
     return Party.create(body)
 
-
-@app.route('/party/<p_id>/admin', methods=['POST'])
+@app.route('/parties/<p_id>/admin', methods=['POST'])
 def create_party_admin(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
         return jsonify('id must be an integer', 500)
     body = request.json
-    json = PartyAdmin.create(p_id, body)
-    if json[1] == 200:
+    created_party_admin = PartyAdmin.create(p_id, body)
+    if create_party_admin[1] == 200:
         request_body = jsonify({
-                "uuid": voting_session.name,
-                "role": voting_session.start_time,
-                "party_name": voting_session.end_time,
-            })
-        request.post("" + f"/user/{}/new_role", json=json[0])
+            "id": random.randint(5,10000),
+            "role": "admin",
+            "party_name": Party.get_one(int(created_party_admin[0]["party_id"]))[0]['name']
+        })
+        url = f'https://authentication-service-lf6x6a722q-uc.a.run.app/user/{created_party_admin[0]["uuid"]}/new_role'
+        x = requests.post(url, json = request_body)
+        return jsonify({'succesfully assigned user'}, 200)
+    else:
+        return jsonify({'Could not create party admin, try again'}, 500)
 
 
-@app.route('/party/<p_id>', methods=['PUT'])
+@app.route('/parties/<p_id>', methods=['PUT'])
 def update_party(p_id):
     try:
         p_id = int(p_id)
@@ -92,7 +96,7 @@ def update_party(p_id):
     body = request.json
     return Party.update(p_id, body)
 
-@app.route('/party/<p_id>', methods=['DELETE'])
+@app.route('/parties/<p_id>', methods=['DELETE'])
 def delete_party(p_id):
     try:
         p_id = int(p_id)
