@@ -9,8 +9,8 @@
     # Copy all files in training-db local host directory to /usr/src/myapp in Docker container
     COPY . .
     # Expose the port that our app runs in
-    EXPOSE 5000
+    EXPOSE 3051
     # Enviroment Variables
-    ENV DB_URL  bigquery://votingadaproject/administration_service_db
+    ENV DB_URL  bigquery://votingadaproject/party_admin_service_db
     # Run our App
     CMD ["python3","app.py"]
