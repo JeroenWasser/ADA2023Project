@@ -27,12 +27,16 @@ class Party:
     def create(body):
         session = Session()
         party = PartyDAO(body["id"], body['name'], datetime.now(), datetime.now())
-        session.add(party)
-        session.commit()
-        session.refresh(party)
-        party_id = party.id
-        session.close()
-        return jsonify({'message': f"{party_id} is deployed as placeholder"})
+
+        try:
+            session.add(party)
+            session.commit()
+            session.refresh(party)
+            session.close()
+            return jsonify({'message': f'Successfully created party with id; {party.id}'}), 200
+        except Exception as err:
+            session.close()
+            return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500
     
     @staticmethod
     def update(p_id, body):
@@ -46,6 +50,14 @@ class Party:
     def delete(p_id):
         session = Session()
         effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).delete()
-        session.commit()
-        session.close()
-        return jsonify({'effected_rows': effected_rows}), 200
+        
+        try:
+            session.commit()
+            session.close()
+            if effected_rows == 0:
+                return jsonify({'message': f'There is no party  with id {p_id}'}), 404
+            else:
+                return jsonify({'message': 'The party is removed'}), 200
+        except Exception as err:
+            session.close()
+            return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500

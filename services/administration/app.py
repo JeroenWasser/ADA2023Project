@@ -8,6 +8,7 @@ from resources.party_admin import PartyAdmin
 from resources.party import Party
 import random
 import requests
+import time
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -64,7 +65,25 @@ def delete_voting_session(vs_id):
 @app.route('/parties/placeholder', methods=['POST'])
 def create_placeholder_party():
     body = request.json
-    return Party.create(body)
+    party = Party.create(body)
+
+    if party[1] == 200:
+        request_body = jsonify({
+            "id": party.id,
+            "name": party.name,
+        })
+        url = f'https://party-admin-service-lf6x6a722q-uc.a.run.app/parties'
+        x = requests.post(url, json = request_body)
+
+        # Simulated retry policy of one retry
+        if x.status_code != 200:
+            print('failed once, trying again.')
+            time.sleep(1)
+            x = requests.post(url, json = request_body)
+        if x.status_code == 200:
+            return jsonify({'message': 'succesfully assigned admin role'}, 200)
+    else:
+        return jsonify({'message': 'Could not create party, try again'}, 500)
 
 @app.route('/parties/<p_id>/admin', methods=['POST'])
 def create_party_admin(p_id):
@@ -102,7 +121,25 @@ def delete_party(p_id):
         p_id = int(p_id)
     except ValueError:
         return jsonify('id must be an integer', 500)
-    return Party.delete(p_id)
+    party = Party.delete(p_id)
+
+    if party[1] == 200:
+        request_body = jsonify({
+            "id": party.id,
+            "name": party.name,
+        })
+        url = f'https://party-admin-service-lf6x6a722q-uc.a.run.app/party/{party.id}'
+        x = requests.delete(url)
+
+        # Simulated retry policy of one retry
+        if x.status_code != 200:
+            print('failed once, trying again.')
+            time.sleep(1)
+            x = requests.post(url, json = request_body)
+        if x.status_code == 200:
+            return jsonify({'message': 'succesfully removed party'}, 200)
+    else:
+        return jsonify({'message': 'Could not create party, try again'}, 500)
 
 
 if __name__ == '__main__':
