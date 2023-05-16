@@ -144,6 +144,8 @@ class RolesHistory:
                     time.sleep(1)
                     x = requests.put(f'https://administration-serv-lf6x6a722q-uc.a.run.app/user/{uuid}/status',
                                   data = {"status": "accepted"})
+                    if x.status_code != 200:
+                        return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
                     return jsonify({'message': 'Your role has successfully been updated.'})
             if body['role'] == 'partymember':
@@ -154,6 +156,8 @@ class RolesHistory:
                     time.sleep(1)
                     x = requests.put(f'https://party-admin-service-lf6x6a722q-uc.a.run.app/user/{uuid}/status',
                                   data = {"status": "accepted"})
+                    if x.status_code != 200:
+                        return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
                     return jsonify({'message': 'Your role has successfully been updated.'})
         if body['answer'] == 'no':
@@ -170,8 +174,10 @@ class RolesHistory:
                     time.sleep(1)
                     x = requests.put(f'https://administration-serv-lf6x6a722q-uc.a.run.app/user/{uuid}/status',
                                   data = {"status": "rejected"})
+                    if x.status_code != 200:
+                        return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
-                    return jsonify({'message': 'Your role has successfully been updated.'})
+                    return jsonify({'message': 'Your role has successfully been updated.'}), 200
             if body['role'] == 'partymember':
                 x = requests.put(f'https://party-admin-service-lf6x6a722q-uc.a.run.app/user/{uuid}/status',
                                   data = {"status": "rejected"})
@@ -180,6 +186,8 @@ class RolesHistory:
                     time.sleep(1)
                     x = requests.put(f'https://party-admin-service-lf6x6a722q-uc.a.run.app/user/{uuid}/status',
                                   data = {"status": "rejected"})
+                    if x.status_code != 200:
+                        return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
                     return jsonify({'message': 'Your choice has been saved.'})
         

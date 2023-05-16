@@ -104,6 +104,10 @@ def delete_party(p_id):
         return jsonify('id must be an integer', 500)
     return Party.delete(p_id)
 
+@app.route('/user/<uuid>/status', methods=['PUT'])
+def update_role(uuid):
+    body = request.get_json()
+    return PartyAdmin.update(uuid, body)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 3000)), host='0.0.0.0', debug=True)
