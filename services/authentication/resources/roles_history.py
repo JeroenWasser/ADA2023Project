@@ -33,7 +33,7 @@ class RolesHistory:
         session = Session()
         user = session.query(RolesDAO).filter(RolesDAO.uuid == uuid).first()
         if body['role'] == 'admin':
-            role_update = RolesHistoryDAO(id = body['id'], update_uuid = str(uuid4()), user_id=user.id, user_verified = False, admin_changed= True, partymember_changed= False, party_name= None,status= 'Pending',created_at= datetime.now(),edited_at= datetime.now())
+            role_update = RolesHistoryDAO(id = body['id'], update_uuid = str(uuid4()), user_id=user.id, user_verified = False, admin_changed= True, partymember_changed= False, party_name= body['party_name'],status= 'Pending',created_at= datetime.now(),edited_at= datetime.now())
             user_id = user.id
             session.add(role_update)
             session.commit()
