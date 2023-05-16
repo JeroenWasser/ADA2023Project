@@ -9,7 +9,11 @@ from resources.party import Party
 import random
 import requests
 import time
+<<<<<<< HEAD
 import json 
+=======
+import json
+>>>>>>> main
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -131,6 +135,7 @@ def delete_party(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
+<<<<<<< HEAD
         return jsonify('id must be an integer', 500)
     party = Party.delete(p_id)
 
@@ -151,6 +156,10 @@ def delete_party(p_id):
             return jsonify({'message': 'succesfully removed party'}, 200)
     else:
         return jsonify({'message': 'Could not create party, try again'}, 500)
+=======
+        return jsonify('id must be an integer'), 500
+    return Party.delete(p_id)
+>>>>>>> main
 
 
 if __name__ == '__main__':
