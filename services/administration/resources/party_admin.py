@@ -31,7 +31,7 @@ class PartyAdmin:
         return jsonify(party_admin), 200
 
     @staticmethod
-    def create(uuid, body):
+    def update(uuid, body):
         session = Session()
         party_admin = session.query(PartyAdminDAO).filter(PartyAdminDAO.uuid == uuid).first()
         if party_admin:

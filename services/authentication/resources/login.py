@@ -10,13 +10,13 @@ class Login:
         session = Session()
         user = session.query(RolesDAO).filter(RolesDAO.uuid == uuid).first()
         verification_required = session.query(RolesHistoryDAO).filter(RolesHistoryDAO.user_id == user.id).first()
-        if user:
+        if user != None:
             session.close()
             if digid_message == 'rejected':
                 return jsonify({'message': 'Your login with DigID was unsuccessful, please try again'}), 404
             elif digid_message == 'accepted':
                 if verification_required:
-                    return redirect(f'/login/verification/{uuid}'), 200
+                    return redirect(f'/user/verification/{uuid}'), 200
                 else:
                     return redirect(f'/login/{uuid}/service_choice'), 200
             else:

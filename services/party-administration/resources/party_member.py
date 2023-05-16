@@ -76,7 +76,7 @@ class PartyMember:
             return jsonify({'message': f'There are no party members in this party'}), 404
     
     @staticmethod
-    def create(uuid, body):
+    def update(uuid, body):
         session = Session()
         party_member = session.query(PartyMemberDAO).filter(PartyMemberDAO.uuid == uuid).first()
         if party_member:
