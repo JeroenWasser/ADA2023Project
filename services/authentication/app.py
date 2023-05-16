@@ -25,14 +25,11 @@ def give_service_choice(uuid):
     cookie = Login.create_cookie(uuid, choice)
 
     if choice['service'] == 'administration':
-        return jsonify({'service': choice['service'], 'cookie': cookie})
-        #return redirect()
+        return jsonify({'message': 'redirecting to administration service', 'cookie': cookie})
     if choice['service'] == 'party':
-        return jsonify({'service': choice['service'], 'cookie': cookie})
-        #return redirect()
+        return jsonify({'message': 'redirecting to party service', 'cookie': cookie})
     if choice['service'] == 'voting':
-        return jsonify({'service': choice['service'], 'cookie': cookie})
-        #return redirect()
+        return jsonify({'message': 'redirecting to voting service', 'cookie': cookie})
 
 @app.route('/user/<uuid>/new_role', methods=['POST'])
 def new_role(uuid):
