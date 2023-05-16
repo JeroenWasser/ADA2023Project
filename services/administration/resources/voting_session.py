@@ -20,9 +20,6 @@ class VotingSession:
     @staticmethod
     def get(vs_id):
         session = Session()
-        # https://docs.sqlalchemy.org/en/14/orm/query.html
-        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-        # parties = session.query(VotingSessionDAO).all()
         voting_session = session.query(VotingSessionDAO).filter(VotingSessionDAO.id == vs_id).first()
         text_out = [{"name": voting_session.name, 
                          "start_time": voting_session.start_time,

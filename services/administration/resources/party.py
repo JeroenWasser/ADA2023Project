@@ -7,17 +7,6 @@ from db import Session
 
 
 class Party:
-    # @staticmethod
-    # def create(body):
-        # session = Session()
-        # delivery = DeliveryDAO(body['customer_id'], body['provider_id'], body['package_id'], datetime.now(),
-        #                        datetime.strptime(body['delivery_time'], '%Y-%m-%d %H:%M:%S.%f'),
-        #                        StatusDAO(STATUS_CREATED, datetime.now()))
-        # session.add(delivery)
-        # session.commit()
-        # session.refresh(delivery)
-        # session.close()
-        # return jsonify({'delivery_id': delivery.id}), 200
 
     @staticmethod
     def get_all():
