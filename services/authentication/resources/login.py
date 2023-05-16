@@ -1,19 +1,24 @@
 from flask import jsonify, redirect, url_for
 from datetime import datetime, timedelta
 from daos.roles_dao import RolesDAO
+from daos.roles_history_dao import RolesHistoryDAO
 from db import Session
 
 class Login:
     @staticmethod
     def digid_check(uuid, digid_message):
         session = Session()
-        user = session.query(RolesDAO).filter(RolesDAO.uuid == int(uuid)).first()
+        user = session.query(RolesDAO).filter(RolesDAO.uuid == uuid).first()
+        verification_required = session.query(RolesHistoryDAO).filter(RolesHistoryDAO.user_id == user.id).first()
         if user:
             session.close()
             if digid_message == 'rejected':
                 return jsonify({'message': 'Your login with DigID was unsuccessful, please try again'}), 404
             elif digid_message == 'accepted':
-                return redirect(f'/login/{uuid}/service_choice'), 200
+                if verification_required:
+                    return redirect(f'/login/verification/{uuid}'), 200
+                else:
+                    return redirect(f'/login/{uuid}/service_choice'), 200
             else:
                 return jsonify({'message': 'An unknown error has occured, please try logging in with DigID again'}), 404
         else:
