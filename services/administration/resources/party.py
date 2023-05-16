@@ -43,7 +43,7 @@ class Party:
         session.refresh(party)
         party_id = party.id
         session.close()
-        return {'party_id': party_id}
+        return jsonify({'message': f"{party_id} is deployed as placeholder"})
     
     @staticmethod
     def update(p_id, body):
