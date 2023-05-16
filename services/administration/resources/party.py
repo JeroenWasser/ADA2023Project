@@ -26,7 +26,7 @@ class Party:
     @staticmethod
     def create(body):
         session = Session()
-        party = PartyDAO(body['name'], datetime.now(), datetime.now())
+        party = PartyDAO(body["id"], body['name'], datetime.now(), datetime.now())
         session.add(party)
         session.commit()
         session.refresh(party)
