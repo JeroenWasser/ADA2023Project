@@ -18,6 +18,7 @@ class Party:
             text_out = [{
                  "id": party.id,
                  "name": party.name,
+                 "uuid": party.uuid,
                  "created_at": party.created_at,
                  "edited_at": party.edited_at
             } for party in parties]
@@ -36,7 +37,7 @@ class Party:
         except:
             return jsonify({'ID must be an integer'}, 500)
 
-        party = PartyDAO(id, body['name'], datetime.now(), datetime.now())
+        party = PartyDAO(id, body['name'], body['uuid'], datetime.now(), datetime.now())
         
         try:
             session.add(party)
