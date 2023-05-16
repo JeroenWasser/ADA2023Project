@@ -11,6 +11,7 @@ class PartyAdminDAO(Base):
     last_name = Column(String)
     status = Column(String)
     uuid = Column(String)
+    party_id = Column(Integer)
 
     created_at = Column(DateTime)
     edited_at = Column(DateTime)
@@ -18,9 +19,11 @@ class PartyAdminDAO(Base):
     # reference to status as foreign key relationship. This will be automatically assigned.
     party_id = Column(Integer, ForeignKey('party.id'))
 
-    def __init__(self, first_name, last_name, status, uuid, created_at, edited_at):
+    def __init__(self, id, first_name, last_name, party_id, status, uuid, created_at, edited_at):
+        self.id = id
         self.first_name = first_name
         self.last_name = last_name
+        self.party_id = party_id
         self.status = status
         self.uuid = uuid
         self.created_at = created_at

@@ -7,23 +7,10 @@ from db import Session
 
 
 class Party:
-    # @staticmethod
-    # def create(body):
-        # session = Session()
-        # delivery = DeliveryDAO(body['customer_id'], body['provider_id'], body['package_id'], datetime.now(),
-        #                        datetime.strptime(body['delivery_time'], '%Y-%m-%d %H:%M:%S.%f'),
-        #                        StatusDAO(STATUS_CREATED, datetime.now()))
-        # session.add(delivery)
-        # session.commit()
-        # session.refresh(delivery)
-        # session.close()
-        # return jsonify({'delivery_id': delivery.id}), 200
 
     @staticmethod
-    def get():
+    def get_all():
         session = Session()
-        # https://docs.sqlalchemy.org/en/14/orm/query.html
-        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
         parties = session.query(PartyDAO).all()
 
         if len(parties) > 0:
@@ -35,3 +22,30 @@ class Party:
         else:
             session.close()
             return jsonify({'message': f'There are no parties'}), 404
+        
+    @staticmethod
+    def create(body):
+        session = Session()
+        party = PartyDAO(body["id"], body['name'], datetime.now(), datetime.now())
+        session.add(party)
+        session.commit()
+        session.refresh(party)
+        party_id = party.id
+        session.close()
+        return jsonify({'message': f"{party_id} is deployed as placeholder"})
+    
+    @staticmethod
+    def update(p_id, body):
+        session = Session()
+        effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).update(body)
+        session.commit()
+        session.close()
+        return jsonify({'effected_rows': effected_rows}), 200
+    
+    @staticmethod
+    def delete(p_id):
+        session = Session()
+        effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).delete()
+        session.commit()
+        session.close()
+        return jsonify({'effected_rows': effected_rows}), 200

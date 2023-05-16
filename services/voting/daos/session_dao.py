@@ -4,7 +4,7 @@ from db import Base
 
 
 class SessionDAO(Base):
-    __tablename__ = 'session'
+    __tablename__ = 'voting_session'
     id = Column(Integer, primary_key=True)  # Auto generated primary key
     name = Column(String)
 
@@ -16,7 +16,8 @@ class SessionDAO(Base):
 
     uuid = Column(String)
 
-    def __init__(self, name, start_time, end_time, created_at, edited_at, uuid):
+    def __init__(self, id, name, start_time, end_time, created_at, edited_at, uuid):
+        self.id = id
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
