@@ -41,8 +41,9 @@ class Party:
         session.add(party)
         session.commit()
         session.refresh(party)
+        party_id = party.id
         session.close()
-        return jsonify({'party_id': party.id}), 200
+        return {'party_id': party_id}
     
     @staticmethod
     def update(p_id, body):
