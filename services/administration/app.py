@@ -7,6 +7,7 @@ from resources.voting_session import VotingSession
 from resources.party_admin import PartyAdmin
 from resources.party import Party
 
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
 Base.metadata.create_all(engine)
@@ -64,6 +65,7 @@ def create_placeholder_party():
     body = request.json
     return Party.create(body)
 
+
 @app.route('/party/<p_id>/admin', methods=['POST'])
 def create_party_admin(p_id):
     try:
@@ -71,7 +73,15 @@ def create_party_admin(p_id):
     except ValueError:
         return jsonify('id must be an integer', 500)
     body = request.json
-    return PartyAdmin.create(p_id, body)
+    json = PartyAdmin.create(p_id, body)
+    if json[1] == 200:
+        request_body = jsonify({
+                "uuid": voting_session.name,
+                "role": voting_session.start_time,
+                "party_name": voting_session.end_time,
+            })
+        request.post("" + f"/user/{}/new_role", json=json[0])
+
 
 @app.route('/party/<p_id>', methods=['PUT'])
 def update_party(p_id):

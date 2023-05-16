@@ -4,6 +4,7 @@ from flask import jsonify
 
 from daos.party_admin_dao import PartyAdminDAO
 from db import Session
+import uuid
 
 
 class PartyAdmin:
@@ -22,9 +23,9 @@ class PartyAdmin:
     @staticmethod
     def create(p_id, body):
         session = Session()
-        party_admin = PartyAdminDAO(body['first_name'], body['last_name'], p_id, body['status'], body['uuid'], datetime.now(), datetime.now())
+        party_admin = PartyAdminDAO(body['first_name'], body['last_name'], p_id, body['status'], str(uuid.uuid4()), datetime.now(), datetime.now())
         session.add(party_admin)
         session.commit()
         session.refresh(party_admin)
         session.close()
-        return jsonify({'party_admin_id': party_admin.id}), 200
+        return jsonify(party_admin), 200
