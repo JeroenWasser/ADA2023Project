@@ -1,27 +1,44 @@
 {
-  "$schema": "https://www.krakend.io/schema/v3.json",
-  "version": 3,
-  "name": "Voting API Gateway",
-  "timeout": "3000ms",
-  "cache_ttl": "300s",
-  "output_encoding": "json",
-  "endpoints": [
-    {
-      "endpoint": "/v1/sessions",
-      "method": "GET",
-      "output_encoding": "json",
-      "backend": [
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "name": "Voting API Gateway",
+    "timeout": "3000ms",
+    "cache_ttl": "300s",
+    "port": "8090",
+    "output_encoding": "json",
+    "endpoints": [{
+            "endpoint": "/v1/sessions",
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/sessions",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://administration-serv-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
         {
-          "url_pattern": "/sessions",
-          "encoding": "json",
-          "sd": "static",
-          "method": "GET",
-          "host": [
-            "https://administration-serv-lf6x6a722q-uc.a.run.app"
-          ],
-          "disable_host_sanitize": false
+            "endpoint": "/v1/party-managment",
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/parties",
+                "encoding": "json",
+                "is_collection": true,
+                "mapping": {
+                    "collection": "parties"
+                },
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
         }
-      ]
-    }
-  ]
+    ]
 }
