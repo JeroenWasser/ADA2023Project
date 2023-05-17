@@ -191,5 +191,10 @@ def create_party_information(p_id):
     req_data = request.get_json()
     return PartyInformation.create(p_id, req_data)
 
+@app.route('/user/<uuid>/status', methods=['PUT'])
+def update_role(uuid):
+    body = request.json
+    return PartyMember.update(uuid, body)
+
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 3051)), host='0.0.0.0', debug=True)

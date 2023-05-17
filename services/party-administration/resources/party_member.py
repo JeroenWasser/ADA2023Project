@@ -114,3 +114,16 @@ class PartyMember:
         else:
             session.close()
             return jsonify({'message': f'There are no party members in this party'}), 404
+    
+    @staticmethod
+    def update(uuid, body):
+        session = Session()
+        party_member = session.query(PartyMemberDAO).filter(PartyMemberDAO.uuid == uuid).first()
+        if party_member:
+            party_member.status = body['status']
+            session.commit()
+            session.close()
+            return jsonify({'message': 'Party member information updated'}), 200
+        else:
+            session.close()
+            return jsonify({'message': 'This user is not in the party database'}), 404

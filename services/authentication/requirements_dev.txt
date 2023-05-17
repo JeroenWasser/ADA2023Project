@@ -1,0 +1,6 @@
+enum
+flask
+sqlalchemy
+sqlalchemy-utils
+sqlalchemy-bigquery
+pytest

@@ -224,7 +224,6 @@ def delete_party(p_id):
     if status == 200:
         url = f'{PARTY_MANAG_SERVICE_ENDPOINT}/parties/{p_id}'
         x = requests.delete(url)
-
         # Simulated retry policy of one retry
         if x.status_code != 200:
             print('failed once, trying again.')
@@ -235,6 +234,10 @@ def delete_party(p_id):
     else:
         return party
     return jsonify({'message': 'Could not create party, try again'}, 500)
+@app.route('/user/<uuid>/status', methods=['PUT'])
+def update_role(uuid):
+    body = request.json
+    return PartyAdmin.update(uuid, body)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 3000)), host='0.0.0.0', debug=True)
