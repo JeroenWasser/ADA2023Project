@@ -61,5 +61,18 @@ class PartyInformation:
         party_information = session.query(PartyInformationDAO).filter(PartyInformationDAO.party_id == p_id).first()
         party_information.description = body['description']
         party_information.edited_at = datetime.now()
-        session.commit()
-        return jsonify({'message': 'The party information was updated'}), 200
+
+        try:
+            session.commit()
+            session.close()
+            
+            text_out = {
+                "id": party_information.id,
+                "description": party_information.description,
+                "created_at": party_information.created_at,
+                "edited_at": party_information.created_at
+            }
+            return jsonify(text_out), 200
+        except Exception as err:
+            session.close()
+            return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500   

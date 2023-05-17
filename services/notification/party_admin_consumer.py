@@ -42,5 +42,5 @@ def callback(message):
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
-    create_subscription("ada2023", "party_admin", "party_admin_sub")
-    pull_message(project="ada2023", subscription="party_admin_sub")  # replace ada2023 with your project id
+    # create_subscription("votingadaproject", "party_managment", "party_managment_sub")
+    pull_message(project="votingadaproject", subscription="party_managment_sub")  # replace ada2023 with your project id

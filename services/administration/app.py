@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, request, jsonify
+from google.cloud import pubsub_v1
 
 from db import Base, engine
 from resources.voting_session import VotingSession
@@ -11,7 +12,7 @@ import requests
 import time
 import json 
 
-VOTE_SERVICE_ENDPOINT = ''
+VOTE_SERVICE_ENDPOINT = 'https://voting-lf6x6a722q-ue.a.run.app'
 PARTY_MANAG_SERVICE_ENDPOINT = 'https://party-admin-service-lf6x6a722q-uc.a.run.app'
 AUTH_SERVICE_ENDPOINT = 'https://authentication-service-lf6x6a722q-uc.a.run.app'
 
@@ -45,7 +46,47 @@ def get_voting_sessions():
 @app.route('/sessions/create', methods=['POST'])
 def create_voting_session():
     body = request.json
-    return VotingSession.create(body)
+    voting_session, status = VotingSession.create(body)
+
+    if status == 200:
+        json_stored_update_session = json.loads(voting_session.get_data())
+        request_body = {
+            "id": json_stored_update_session['id'],
+            "name": json_stored_update_session['name'],
+            "start_time": json_stored_update_session['start_time'],
+            "end_time": json_stored_update_session['start_time'],
+            "uuid": json_stored_update_session['uuid'],
+            "created_at": json_stored_update_session['created_at'],
+            "edited_at": json_stored_update_session['edited_at']
+        }
+        url = f'{VOTE_SERVICE_ENDPOINT}/sessions'
+        x = requests.post(url, json = request_body)
+
+        # Simulated retry policy of one retry
+        if x.status_code != 200:
+            print('failed once, trying again.')
+            time.sleep(1)
+            x = requests.post(url, json = request_body)       
+        if x.status_code == 200:
+            publisher = pubsub_v1.PublisherClient()
+            topic_path = publisher.topic_path("votingadaproject", "voting_session")
+            data = [
+                {
+                    "session_id": json_stored_update_session['id'],
+                    "status": "created",
+                }
+            ]
+            data = json.dumps(data).encode("utf-8")
+            future = publisher.publish(topic_path, data)
+
+            try:
+                future.result()  # see https://docs.python.org/3/library/concurrent.futures.html
+            except Exception as ex:
+                return jsonify('topic message not send'), 500
+            return jsonify({"message": f'Session created'}), 200
+    else:
+        return voting_session, status
+    return voting_session, status
 
 #Tested
 @app.route('/sessions/<vs_id>', methods=['PUT'])

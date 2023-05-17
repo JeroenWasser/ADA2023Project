@@ -56,13 +56,19 @@ class Voting_Session:
     @staticmethod
     def create(body):
         session = Session()
-        voting_session = SessionDAO(body["id"],
-                                        body["name"], 
-                                        body["start_time"], 
-                                        body["end_time"],
-                                        body["created_at"],
-                                        body["edited_at"],
-                                        body["uuid"])
+
+        try:
+            s_id = int(body["id"])
+        except:
+            return jsonify({'ID must be an integer'}, 500)
+
+        voting_session = SessionDAO(s_id,
+                                    body["name"], 
+                                    body["start_time"], 
+                                    body["end_time"],
+                                    body["created_at"],
+                                    body["edited_at"],
+                                    body["uuid"])
         try:
             session.add(voting_session)
             session.commit()

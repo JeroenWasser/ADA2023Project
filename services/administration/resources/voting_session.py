@@ -1,7 +1,7 @@
 from datetime import datetime
 from daos.voting_session_dao import VotingSessionDAO
 from flask import jsonify
-import random
+import uuid
 
 from db import Session
 
@@ -10,12 +10,27 @@ class VotingSession:
     @staticmethod
     def create(body):
         session = Session()
-        voting_session = VotingSessionDAO(body["id"], body['name'], datetime.now(), body["end_time"], datetime.now(), datetime.now())
-        session.add(voting_session)
-        session.commit()
-        session.refresh(voting_session)
-        session.close()
-        return jsonify({'voting_session_id': voting_session.id}), 200
+        voting_session = VotingSessionDAO(body["id"], body['name'], datetime.now(), body["end_time"], datetime.now(), datetime.now(), str(uuid.uuid4()))
+        
+        try:
+            session.add(voting_session)
+            session.commit()
+            session.refresh(voting_session)
+            session.close()
+            
+            text_out = {
+                "id": voting_session.id,
+                "name": voting_session.name,
+                "start_time": voting_session.start_time.strftime('%Y-%m-%d %H:%M:%S'),
+                "end_time": voting_session.end_time.strftime('%Y-%m-%d %H:%M:%S'),
+                "created_at": voting_session.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                "edited_at": voting_session.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                "uuid": voting_session.uuid
+            }
+            return jsonify(text_out), 200
+        except Exception as err:
+            session.close()
+            return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500   
 
     @staticmethod
     def get(vs_id):
@@ -80,7 +95,8 @@ class VotingSession:
                 "start_time": voting_session.start_time,
                 "end_time": voting_session.end_time,
                 "created_at": voting_session.created_at,
-                "edited_at": voting_session.created_at
+                "edited_at": voting_session.created_at,
+                "uuid": voting_session.uuid
             }
             return jsonify(text_out), 200
         except Exception as err:

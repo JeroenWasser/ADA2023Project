@@ -1,8 +1,8 @@
 from google.cloud import bigquery
 
-bigquery_client = bigquery.Client()
-dataset_id = 'your-dataset-id'
-table_id = 'your-table-id'
+bigquery_client = bigquery.Client(project="votingadaproject")
+dataset_id = 'notification_service'
+table_id = 'party_admin_message'
 
 def create_table_if_not_exists():
     dataset_ref = bigquery_client.dataset(dataset_id)

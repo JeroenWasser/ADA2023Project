@@ -2,8 +2,7 @@ import logging
 import time
 
 from google.cloud import pubsub_v1
-import resources.bigquery as BigQuery
-
+from datetime import datetime
 
 def create_subscription(project_id, topic_id, subscription_id):
     try:
@@ -38,11 +37,10 @@ def pull_message(project, subscription):
 
 def callback(message):
     logging.info(f"Received {message}.")
-    BigQuery.export_to_bigquery(message, datetime.datetime.now())
     message.ack()
 
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
-    create_subscription("ada2023", "vote_message", "vote_message_sub")
-    pull_message(project="ada2023", subscription="vote_message_sub")  # replace ada2023 with your project id
+    # create_subscription("votingadaproject", "voting_session", "voting_session_sub")
+    pull_message(project="votingadaproject", subscription="voting_session_sub")  # replace ada2023 with your project id
