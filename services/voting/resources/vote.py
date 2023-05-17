@@ -19,14 +19,20 @@ class Vote:
         except:
             return jsonify({'ID must be an integer'}, 500)
         vote = VoteDAO(vote_id, str(uuid.uuid4()), body['voter_uuid'], session_id ,datetime.now(), body['member_uuid'])
-        print(vote)
-        print(type(vote))
+        
+        
         try:
             session.add(vote)
             session.commit()
             session.refresh(vote)
             session.close()
-            return jsonify({'vote placed': 'succesfully'}), 200
+
+            text_out = {
+                 "id": vote.id,
+                 "uuid": vote.voter_uuid,
+                 "member_uuid": vote.voter_uuid
+            }
+            return jsonify(text_out), 200
         except:
             session.close()
             return jsonify({'Could not place vote encountered error'}), 500
