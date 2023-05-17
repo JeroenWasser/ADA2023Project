@@ -4,7 +4,7 @@ from flask import jsonify
 
 from daos.party_dao import PartyDAO
 from db import Session
-
+import uuid
 
 class Party:
 
@@ -43,14 +43,22 @@ class Party:
     @staticmethod
     def create(body):
         session = Session()
-        party = PartyDAO(body["id"], body['name'], datetime.now(), datetime.now())
+        party = PartyDAO(body["id"], body['name'], str(uuid.uuid4()), datetime.now(), datetime.now())
 
         try:
             session.add(party)
             session.commit()
             session.refresh(party)
             session.close()
-            return jsonify({'message': f'Successfully created party with id; {party.id}'}), 200
+            
+            text_out = {
+                "id": party.id,
+                "name": party.name,
+                "uuid": party.uuid,
+                "created_at": party.created_at,
+                "edited_at": party.created_at
+            }
+            return jsonify(text_out), 200
         except Exception as err:
             session.close()
             return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500

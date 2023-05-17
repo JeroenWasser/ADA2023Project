@@ -69,6 +69,20 @@ class VotingSession:
         voting_session.end_time = body.get('end_time', voting_session.end_time)
         voting_session.edited_at = datetime.now()
         voting_session.edited_at = datetime.now()
-        session.commit()
-        session.close()
-        return jsonify({'message': f'The voting session {vs_id} is updated'}), 200
+
+        try:
+            session.commit()
+            session.close()
+            
+            text_out = {
+                "id": voting_session.id,
+                "name": voting_session.name,
+                "start_time": voting_session.start_time,
+                "end_time": voting_session.end_time,
+                "created_at": voting_session.created_at,
+                "edited_at": voting_session.created_at
+            }
+            return jsonify(text_out), 200
+        except Exception as err:
+            session.close()
+            return jsonify({'message': f'Could not create party, encountered error: {err}'}), 500   
