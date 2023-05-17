@@ -18,6 +18,7 @@
             "backend": [{
                 "url_pattern": "/sessions",
                 "encoding": "json",
+                "is_collection": true,
                 "sd": "static",
                 "method": "GET",
                 "host": [
@@ -38,6 +39,7 @@
             "backend": [{
                 "url_pattern": "/sessions/{vs_id}",
                 "encoding": "json",
+                "is_collection": false,
                 "sd": "static",
                 "method": "GET",
                 "host": [
@@ -208,6 +210,11 @@
         },
         {
             "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
             "method": "GET",
             "output_encoding": "json",
             "backend": [{
@@ -221,6 +228,439 @@
                 "method": "GET",
                 "host": [
                     "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-members/{p_id}/{m_id}",
+                "encoding": "json",
+                "is_collection": false,
+                "mapping": {
+                    "collection": "parties"
+                },
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-members/{p_id}",
+                "encoding": "json",
+                "is_collection": true,
+                "mapping": {
+                    "collection": "parties"
+                },
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/parties",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "DELETE",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party/{p_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "DELETE",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "DELETE",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-members/{m_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "DELETE",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-members",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-information/{p_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "PUT",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-information/{p_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "PUT",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/party-information/{p_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/party-managment",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "PUT",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/user/{uuid}/status",
+                "encoding": "json",
+                "sd": "static",
+                "method": "PUT",
+                "host": [
+                    "https://party-admin-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/voting",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/sessions",
+                "encoding": "json",
+                "is_collection": true,
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://voting-lf6x6a722q-ue.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/voting",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/sessions/latest",
+                "encoding": "json",
+                "is_collection": false,
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://voting-lf6x6a722q-ue.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/voting",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/votes/sessions/{s_id}",
+                "encoding": "json",
+                "is_collection": false,
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://voting-lf6x6a722q-ue.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/voting",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/sessions",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://voting-lf6x6a722q-ue.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/voting",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/votes/sessions/{s_id}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://voting-lf6x6a722q-ue.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/login/{uuid}/{digid_message}",
+                "encoding": "json",
+                "is_collection": false,
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/login/{uuid}/service_choice",
+                "encoding": "json",
+                "is_collection": false,
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/login/{uuid}/service_choice",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/user/{uuid}/new_role",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "GET",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/user/verification/{uuid}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/v1/authentication",
+            "input_headers": [
+                "User-Agent",
+                "Accept",
+                "token"
+              ],
+            "method": "POST",
+            "output_encoding": "json",
+            "backend": [{
+                "url_pattern": "/user/verification/{uuid}",
+                "encoding": "json",
+                "sd": "static",
+                "method": "POST",
+                "host": [
+                    "https://authentication-service-lf6x6a722q-uc.a.run.app"
                 ],
                 "disable_host_sanitize": false
             }]
