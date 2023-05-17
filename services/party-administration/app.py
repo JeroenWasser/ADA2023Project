@@ -147,7 +147,7 @@ def add_party_member():
     else:
         return party_member
 
-@app.route('/party-information/<p_id>', methods=['PUT'])
+@app.route('/party-information/<p_id>', methods=['GET'])
 def get_party_information(p_id):
     if validate_cookie(request.headers.get('token')) != True:
          return jsonify('Authentication token expired'), 500

@@ -206,6 +206,7 @@ def create_party_admin(p_id):
             "id": json_stored_created_party_admin['id'],
             "first_name": json_stored_created_party_admin['first_name'],
             "last_name": json_stored_created_party_admin['last_name'],
+            "uuid": json_stored_created_party_admin['uuid'],
             "party_id": json_stored_created_party_admin["party_id"]
         }
         url = f'{PARTY_MANAG_SERVICE_ENDPOINT}/party-members'
