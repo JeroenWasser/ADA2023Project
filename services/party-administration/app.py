@@ -10,6 +10,8 @@ from resources.party_information import PartyInformation
 from resources.party import Party
 import json
 import requests
+import random
+import time
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -118,7 +120,23 @@ def add_party_member():
             future.result()  # see https://docs.python.org/3/library/concurrent.futures.html
         except Exception as ex:
             return jsonify('topic message not send'), 500
-        return jsonify({"message": f'Party member with ID {json_stored_created_party_member["id"]} created'}), 200
+
+        # Also send post request to authentication service
+        json_stored_created_party = json.loads(Party.get_one(int(json_stored_created_party_member["party_id"])).get_data())
+        request_body = {
+            "id": random.randint(5,10000),
+            "role": "partymember",
+            "party_name": json_stored_created_party['name']
+        }
+        url = f'https://authentication-service-lf6x6a722q-uc.a.run.app/user/{json_stored_created_party_member["uuid"]}/new_role'
+        x = requests.post(url, json = request_body)
+        # Simulated retry policy of one retry
+        if x.status_code != 200:
+            print('failed once, trying again')
+            time.sleep(1)
+            x = requests.post(url, json = request_body)
+        if x.status_code == 200:
+            return jsonify({"message": f'Party member with ID {json_stored_created_party_member["id"]} created'}), 200
     else:
         return party_member
 
