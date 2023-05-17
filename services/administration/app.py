@@ -106,7 +106,7 @@ def delete_party(p_id):
 
 @app.route('/user/<uuid>/status', methods=['PUT'])
 def update_role(uuid):
-    body = request.get_json()
+    body = request.json
     return PartyAdmin.update(uuid, body)
 
 if __name__ == '__main__':

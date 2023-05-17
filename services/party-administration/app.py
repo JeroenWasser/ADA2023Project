@@ -65,7 +65,7 @@ def create_party_information(p_id):
 
 @app.route('/user/<uuid>/status', methods=['PUT'])
 def update_role(uuid):
-    body = request.get_json()
+    body = request.json
     return PartyMember.update(uuid, body)
 
 if __name__ == '__main__':
