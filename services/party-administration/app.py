@@ -12,6 +12,7 @@ import json
 import requests
 import random
 import time
+import datetime
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -21,32 +22,33 @@ auth = HTTPTokenAuth(scheme='Bearer')
 
 ADMINISTRATION_SERVICE_ENDPOINT = 'https://administration-serv-lf6x6a722q-uc.a.run.app'
 
-tokens = {
-    "123": "admin",
-    "456": "partymember",
-    "789": "inhabitant"
-}
-
-
-@auth.verify_token
-def verify_token(token):
-    if token in tokens:
-        return tokens[token]
+def validate_cookie(token):
+    if token == None:
+        return False
+    seperate_values = token.split(';')
+    if not ('456' or 'internal') in seperate_values[0]:
+        return False
+    if datetime.datetime.now() + datetime.timedelta(hours=1) < datetime.datetime.strptime(seperate_values[2].split('=')[1], '%Y-%m-%d %H:%M:%S'):
+        return False
+    return True
     
-@auth.login_required
 @app.route('/parties', methods=['GET'])
 def get_parties():
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     return Party.get_all()
 
-@auth.login_required
 @app.route('/parties', methods=['POST'])
 def add_party():
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     req_data = request.get_json()
     return Party.add_party(req_data)
 
-@auth.login_required
 @app.route('/party/<p_id>', methods=['DELETE'])
 def remove_party(p_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         p_id = int(p_id)
     except ValueError:
@@ -71,9 +73,10 @@ def remove_party(p_id):
             return jsonify('topic message not send'), 500
         return jsonify({"message": f'Party with ID {p_id} removed'}), 200
 
-@auth.login_required
 @app.route('/party-members/<p_id>/<m_id>', methods=['GET'])
 def get_party_member(m_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         m_id = int(m_id)
     except ValueError:
@@ -81,9 +84,10 @@ def get_party_member(m_id):
     
     return PartyMember.get(m_id)
 
-@auth.login_required
 @app.route('/party-members/<m_id>', methods=['DELETE'])
 def delete_party_member(m_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         m_id = int(m_id)
     except ValueError:
@@ -91,14 +95,16 @@ def delete_party_member(m_id):
     
     return PartyMember.delete(m_id)
 
-@auth.login_required
 @app.route('/party-members/<p_id>', methods=['GET'])
 def get_party_members(p_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     return PartyMember.get_party_members(p_id)
 
-@auth.login_required
 @app.route('/party-members', methods=['POST'])
 def add_party_member():
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     req_data = request.get_json()
     party_member, status = PartyMember.create(req_data)
 
@@ -128,21 +134,23 @@ def add_party_member():
             "role": "partymember",
             "party_name": json_stored_created_party['name']
         }
+        headers = {'token': f'token=internal; uuid=placeholder; valid_to={datetime.datetime.now()}'}
         url = f'https://authentication-service-lf6x6a722q-uc.a.run.app/user/{json_stored_created_party_member["uuid"]}/new_role'
-        x = requests.post(url, json = request_body)
+        x = requests.post(url, json = request_body, headers=headers)
         # Simulated retry policy of one retry
         if x.status_code != 200:
             print('failed once, trying again')
             time.sleep(1)
-            x = requests.post(url, json = request_body)
+            x = requests.post(url, json = request_body, headers=headers)
         if x.status_code == 200:
             return jsonify({"message": f'Party member with ID {json_stored_created_party_member["id"]} created'}), 200
     else:
         return party_member
 
-@auth.login_required
 @app.route('/party-information/<p_id>', methods=['PUT'])
 def get_party_information(p_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         p_id = int(p_id)
     except ValueError:
@@ -150,9 +158,10 @@ def get_party_information(p_id):
     
     return PartyInformation.get(p_id)
 
-@auth.login_required
 @app.route('/party-information/<p_id>', methods=['PUT'])
 def update_party_information(p_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         p_id = int(p_id)
     except ValueError:
@@ -167,22 +176,25 @@ def update_party_information(p_id):
             "description": json_stored_update_party_info['name'],
         }
         url = f'{ADMINISTRATION_SERVICE_ENDPOINT}/parties/{json_stored_update_party_info["id"]}'
-        x = requests.put(url, json = request_body)
+        headers = {'token': f'token=internal; uuid=placeholder; valid_to={datetime.datetime.now()}'}
+
+        x = requests.put(url, json = request_body, headers=headers)
 
         # Simulated retry policy of one retry
         if x.status_code != 200:
             print('failed once, trying again.')
             time.sleep(1)
-            x = requests.put(url, json = request_body)       
+            x = requests.put(url, json = request_body, headers=headers)       
         if x.status_code == 200:
             return jsonify({'message': 'succesfully created party'}), 200
     else:
         return party_info, status
     return party_info, status
 
-@auth.login_required
 @app.route('/party-information/<p_id>', methods=['POST'])
 def create_party_information(p_id):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     try:
         p_id = int(p_id)
     except ValueError:
@@ -193,6 +205,8 @@ def create_party_information(p_id):
 
 @app.route('/user/<uuid>/status', methods=['PUT'])
 def update_role(uuid):
+    if validate_cookie(request.headers.get('token')) != True:
+         return jsonify('Authentication token expired'), 500
     body = request.json
     return PartyMember.update(uuid, body)
 
