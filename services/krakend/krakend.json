@@ -2,16 +2,14 @@
     "$schema": "https://www.krakend.io/schema/v3.json",
     "version": 3,
     "name": "Voting API Gateway",
-    "timeout": "3000ms",
+    "timeout": "50000ms",
     "cache_ttl": "300s",
     "port": "8090",
     "output_encoding": "json",
     "endpoints": [{
             "endpoint": "/v1/administration/sessions",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -30,9 +28,7 @@
         {
             "endpoint": "/v1/administration/sessions/{vs_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -51,9 +47,7 @@
         {
             "endpoint": "/v1/administration/sessions/create",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -71,9 +65,7 @@
         {
             "endpoint": "/v1/administration/sessions/{vs_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "PUT",
             "output_encoding": "json",
@@ -91,9 +83,7 @@
         {
             "endpoint": "/v1/administration/sessions/{vs_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "DELETE",
             "output_encoding": "json",
@@ -111,9 +101,7 @@
         {
             "endpoint": "/v1/administration/parties/placeholder",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -131,9 +119,7 @@
         {
             "endpoint": "/v1/administration/parties/{p_id}/admin",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -151,9 +137,7 @@
         {
             "endpoint": "/v1/administration/parties/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "PUT",
             "output_encoding": "json",
@@ -171,9 +155,7 @@
         {
             "endpoint": "/v1/administration/parties/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "DELETE",
             "output_encoding": "json",
@@ -191,9 +173,7 @@
         {
             "endpoint": "/v1/administration/user/{uuid}/status",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "PUT",
             "output_encoding": "json",
@@ -211,9 +191,7 @@
         {
             "endpoint": "/v1/party-managment/parties",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -235,9 +213,7 @@
         {
             "endpoint": "/v1/party-managment/party-members/{p_id}/{m_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -259,9 +235,7 @@
         {
             "endpoint": "/v1/party-managment/party-members/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -283,9 +257,7 @@
         {
             "endpoint": "/v1/party-managment/parties",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -303,9 +275,7 @@
         {
             "endpoint": "/v1/party-managment/party/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "DELETE",
             "output_encoding": "json",
@@ -323,9 +293,7 @@
         {
             "endpoint": "/v1/party-managment/party-members/{m_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "DELETE",
             "output_encoding": "json",
@@ -343,9 +311,7 @@
         {
             "endpoint": "/v1/party-managment/party-members",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -363,9 +329,7 @@
         {
             "endpoint": "/v1/party-managment/party-information/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -383,9 +347,7 @@
         {
             "endpoint": "/v1/party-managment/party-information/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "PUT",
             "output_encoding": "json",
@@ -403,9 +365,7 @@
         {
             "endpoint": "/v1/party-managment/party-information/{p_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -423,9 +383,7 @@
         {
             "endpoint": "/v1/party-managment/user/{uuid}/status",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "PUT",
             "output_encoding": "json",
@@ -443,9 +401,7 @@
         {
             "endpoint": "/v1/voting/sessions",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -464,9 +420,7 @@
         {
             "endpoint": "/v1/voting/sessions/latest",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -485,9 +439,7 @@
         {
             "endpoint": "/v1/voting/votes/sessions/{s_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -506,9 +458,7 @@
         {
             "endpoint": "/v1/voting/sessions",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -526,9 +476,7 @@
         {
             "endpoint": "/v1/voting/votes/sessions/{s_id}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -546,9 +494,7 @@
         {
             "endpoint": "/v1/authentication/login/{uuid}/{digid_message}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -567,9 +513,7 @@
         {
             "endpoint": "/v1/authentication/login/{uuid}/service_choice",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -588,9 +532,7 @@
         {
             "endpoint": "/v1/authentication/login/{uuid}/service_choice",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -608,9 +550,7 @@
         {
             "endpoint": "/v1/authentication/user/{uuid}/new_role",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",
@@ -628,9 +568,7 @@
         {
             "endpoint": "/v1/authentication/user/verification/{uuid}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "GET",
             "output_encoding": "json",
@@ -648,9 +586,7 @@
         {
             "endpoint": "/v1/authentication/user/verification/{uuid}",
             "input_headers": [
-                "User-Agent",
-                "Accept",
-                "token"
+                "*"
               ],
             "method": "POST",
             "output_encoding": "json",

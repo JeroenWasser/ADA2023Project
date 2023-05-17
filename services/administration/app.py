@@ -12,9 +12,9 @@ import requests
 import time
 import json 
 
-VOTE_SERVICE_ENDPOINT = 'https://voting-lf6x6a722q-ue.a.run.app'
-PARTY_MANAG_SERVICE_ENDPOINT = 'https://party-admin-service-lf6x6a722q-uc.a.run.app'
-AUTH_SERVICE_ENDPOINT = 'https://authentication-service-lf6x6a722q-uc.a.run.app'
+VOTE_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/voting'
+PARTY_MANAG_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment'
+AUTH_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/authentication'
 
 app = Flask(__name__)
 app.config["DEBUG"] = True

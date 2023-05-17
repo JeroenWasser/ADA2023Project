@@ -40,24 +40,9 @@ def new_role(uuid):
         return jsonify({'Message': 'Please provide a role to request'})
     return RolesHistory.add_role(uuid, body)
 
-# @app.route('/user/<uuid>/new_partymember_role', methods=['POST'])
-# def new_partymember_role(uuid):
-#     body = request.get_json()
-#     return RolesHistory.add_partymember_role(uuid, body)
-
 @app.route('/user/verification/<uuid>', methods=['GET'])
 def verify_role_user(uuid):
     return RolesHistory.verify_role(uuid)
-
-# @app.route('/user/<uuid>/verification/admin', methods=['POST'])
-# def user_admin_role_verified(uuid):
-#     req_data = request.get_json()
-#     return RolesHistory.admin_role_verified(uuid, req_data)
-
-# @app.route('/user/<uuid>/verification/member', methods=['POST'])
-# def user_member_role_verified(uuid):
-#     req_data = request.get_json()
-#     return RolesHistory.member_role_verified(uuid, req_data)
 
 @app.route('/user/verification/<uuid>', methods=['POST'])
 def user_role_verified(uuid):

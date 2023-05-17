@@ -20,7 +20,7 @@ Base.metadata.create_all(engine)
 
 auth = HTTPTokenAuth(scheme='Bearer')
 
-ADMINISTRATION_SERVICE_ENDPOINT = 'https://administration-serv-lf6x6a722q-uc.a.run.app'
+ADMINISTRATION_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/administration'
 
 def validate_cookie(token):
     if token == None:
