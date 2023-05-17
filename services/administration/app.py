@@ -8,6 +8,8 @@ from resources.party_admin import PartyAdmin
 from resources.party import Party
 import random
 import requests
+import time
+import json
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -27,7 +29,7 @@ def get_voting_session(vs_id):
     try:
         vs_id = int(vs_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify('id must be an integer'), 500
     return VotingSession.get(vs_id)
 
 #Tested
@@ -47,7 +49,7 @@ def update_voting_session(vs_id):
     try:
         vs_id = int(vs_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify('id must be an integer'), 500
     body = request.json
     return VotingSession.update(vs_id, body)
 
@@ -57,7 +59,7 @@ def delete_voting_session(vs_id):
     try:
         vs_id = int(vs_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify('id must be an integer'), 500
     return VotingSession.delete(vs_id)
 
 
@@ -71,20 +73,30 @@ def create_party_admin(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify({'message': 'id must be an integer'}), 500
     body = request.json
-    created_party_admin = PartyAdmin.create(p_id, body)
-    if create_party_admin[1] == 200:
-        request_body = jsonify({
+    created_party_admin, status = PartyAdmin.create(p_id, body)
+    if status == 200:
+        json_stored_created_party_admin = json.loads(created_party_admin.get_data())
+        json_stored_created_party = json.loads(Party.get_one(int(json_stored_created_party_admin["party_id"])).get_data())
+
+        request_body = {
             "id": random.randint(5,10000),
             "role": "admin",
-            "party_name": Party.get_one(int(created_party_admin[0]["party_id"]))[0]['name']
-        })
-        url = f'https://authentication-service-lf6x6a722q-uc.a.run.app/user/{created_party_admin[0]["uuid"]}/new_role'
+            "party_name": json_stored_created_party['name']
+        }
+        url = f'https://authentication-service-lf6x6a722q-uc.a.run.app/user/{json_stored_created_party_admin["uuid"]}/new_role'
         x = requests.post(url, json = request_body)
-        return jsonify({'succesfully assigned user'}, 200)
+        # Simulated retry policy of one retry
+        if x.status_code != 200:
+            print('failed once, trying again')
+            time.sleep(1)
+            x = requests.post(url, json = request_body)
+        if x.status_code == 200:
+            return jsonify({'message': 'succesfully assigned admin role'}), 200
     else:
-        return jsonify({'Could not create party admin, try again'}, 500)
+        return jsonify({'message': 'Could not create party admin, try again'}), 500
+    return jsonify({'message': 'Could not create party admin, try again'}), 500
 
 
 @app.route('/parties/<p_id>', methods=['PUT'])
@@ -92,7 +104,7 @@ def update_party(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify('id must be an integer'), 500
     body = request.json
     return Party.update(p_id, body)
 
@@ -101,7 +113,7 @@ def delete_party(p_id):
     try:
         p_id = int(p_id)
     except ValueError:
-        return jsonify('id must be an integer', 500)
+        return jsonify('id must be an integer'), 500
     return Party.delete(p_id)
 
 @app.route('/user/<uuid>/status', methods=['PUT'])

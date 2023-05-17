@@ -19,7 +19,7 @@ class PartyAdminDAO(Base):
     # reference to status as foreign key relationship. This will be automatically assigned.
     party_id = Column(Integer, ForeignKey('party.id'))
 
-    def __init__(self, id, first_name, last_name, party_id, status, uuid, created_at, edited_at):
+    def __init__(self, id, first_name, last_name, status, uuid, party_id, created_at, edited_at):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name

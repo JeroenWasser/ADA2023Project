@@ -24,6 +24,23 @@ class Party:
             return jsonify({'message': f'There are no parties'}), 404
         
     @staticmethod
+    def get_one(party_id):
+        session = Session()
+
+        party = session.query(PartyDAO).filter(PartyDAO.id == int(party_id)).first()
+
+        if party != None:
+            text_out = {"id": party.id,
+                        "name": party.name, 
+                        "created_at": party.created_at,
+                        "edited_at": party.edited_at}
+            session.close()
+            return jsonify(text_out)
+        else:
+            session.close()
+            return jsonify({'message': f'There are no parties'}), 404
+        
+    @staticmethod
     def create(body):
         session = Session()
         party = PartyDAO(body["id"], body['name'], datetime.now(), datetime.now())
