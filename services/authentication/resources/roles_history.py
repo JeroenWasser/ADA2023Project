@@ -123,6 +123,7 @@ class RolesHistory:
         else:
             return jsonify({'message': f'"{body["role"]}" is an undefined role, please try again.'}), 404
         
+        headers = {'token': f'token=internal; uuid=placeholder; valid_to={datetime.datetime.now()}'}
         if body['answer'] == 'yes':
             if role_update.partymember_changed:
                 user.partymember = True
@@ -138,24 +139,24 @@ class RolesHistory:
             session.close()
             if body['role'] == 'admin':
                 x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/administration/user/{uuid}/status',
-                                  json = {"status": "accepted"})
+                                  json = {"status": "accepted"}, headers=headers)
                 if x.status_code != 200:
                     print('failed once, trying again')
                     time.sleep(1)
                     x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/administration/user/{uuid}/status',
-                                  json = {"status": "accepted"})
+                                  json = {"status": "accepted"}, headers=headers)
                     if x.status_code != 200:
                         return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
                     return jsonify({'message': 'Your role has successfully been updated.'})
             if body['role'] == 'partymember':
-                x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment/user/{uuid}/status',
-                                  json = {"status": "accepted"})
+                x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-management/user/{uuid}/status',
+                                  json = {"status": "accepted"}, headers=headers)
                 if x.status_code != 200:
                     print('failed once, trying again')
                     time.sleep(1)
-                    x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment/user/{uuid}/status',
-                                  json = {"status": "accepted"})
+                    x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-management/user/{uuid}/status',
+                                  json = {"status": "accepted"}, headers=headers)
                     if x.status_code != 200:
                         return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
@@ -168,24 +169,24 @@ class RolesHistory:
             session.close()
             if body['role'] == 'admin':
                 x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/administration/user/{uuid}/status',
-                                  data = {"status": "rejected"})
+                                  data = {"status": "rejected"}, headers=headers)
                 if x.status_code != 200:
                     print('failed once, trying again')
                     time.sleep(1)
                     x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/administration/user/{uuid}/status',
-                                  data = {"status": "rejected"})
+                                  data = {"status": "rejected"}, headers=headers)
                     if x.status_code != 200:
                         return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:
                     return jsonify({'message': 'Your role has successfully been updated.'}), 200
             if body['role'] == 'partymember':
-                x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment/user/{uuid}/status',
-                                  data = {"status": "rejected"})
+                x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-management/user/{uuid}/status',
+                                  data = {"status": "rejected"}, headers=headers)
                 if x.status_code != 200:
                     print('failed once, trying again')
                     time.sleep(1)
-                    x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment/user/{uuid}/status',
-                                  data = {"status": "rejected"})
+                    x = requests.put(f'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-management/user/{uuid}/status',
+                                  data = {"status": "rejected"}, headers=headers)
                     if x.status_code != 200:
                         return jsonify({'message': f'PUT request failed with code {x.statuscode}'})
                 if x.status_code == 200:

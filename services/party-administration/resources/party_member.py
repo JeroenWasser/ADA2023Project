@@ -14,7 +14,7 @@ class PartyMember:
         try:
             id = int(body['id'])
         except:
-            return jsonify({'ID must be an integer'}, 500)
+            return jsonify({'message': 'ID must be an integer'}), 500
 
         party_member = PartyMemberDAO(id, body['first_name'], body['last_name'], 'pending', body['uuid'], body['party_id'], datetime.now(), datetime.now())
         

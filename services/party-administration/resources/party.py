@@ -26,7 +26,7 @@ class Party:
             return jsonify(text_out), 200
         else:
             session.close()
-            return jsonify({'message': f'There are no parties'}), 404\
+            return jsonify({'message': f'There are no parties'}), 404
     
     @staticmethod
     def get_one(party_id):
@@ -52,7 +52,7 @@ class Party:
         try:
             id = int(body['id'])
         except:
-            return jsonify({'ID must be an integer'}, 500)
+            return jsonify({'message': 'ID must be an integer'}), 500
 
         party = PartyDAO(id, body['name'], body['uuid'], datetime.now(), datetime.now())
         
@@ -73,7 +73,7 @@ class Party:
         try:
             p_id = int(p_id)
         except:
-            return jsonify({'ID must be an integer'}, 500)
+            return jsonify({'message': 'ID must be an integer'}), 500
 
         effected_rows = session.query(PartyDAO).filter(PartyDAO.id == p_id).delete()
 

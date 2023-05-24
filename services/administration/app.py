@@ -13,7 +13,7 @@ import time
 import json 
 
 VOTE_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/voting'
-PARTY_MANAG_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-managment'
+PARTY_MANAG_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/party-management'
 AUTH_SERVICE_ENDPOINT = 'https://api-gateway-lf6x6a722q-uc.a.run.app/v1/authentication'
 
 app = Flask(__name__)
@@ -261,6 +261,7 @@ def delete_party(p_id):
     else:
         return party
     return jsonify({'message': 'Could not create party, try again'}, 500)
+
 @app.route('/user/<uuid>/status', methods=['PUT'])
 def update_role(uuid):
     if validate_cookie(request.headers.get('token')) != True:

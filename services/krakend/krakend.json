@@ -189,7 +189,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/parties",
+            "endpoint": "/v1/party-management/parties",
             "input_headers": [
                 "*"
               ],
@@ -211,7 +211,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-members/{p_id}/{m_id}",
+            "endpoint": "/v1/party-management/party-members/{p_id}/{m_id}",
             "input_headers": [
                 "*"
               ],
@@ -233,7 +233,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-members/{p_id}",
+            "endpoint": "/v1/party-management/party-members/{p_id}",
             "input_headers": [
                 "*"
               ],
@@ -255,7 +255,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/parties",
+            "endpoint": "/v1/party-management/parties",
             "input_headers": [
                 "*"
               ],
@@ -273,7 +273,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party/{p_id}",
+            "endpoint": "/v1/party-management/party/{p_id}",
             "input_headers": [
                 "*"
               ],
@@ -291,7 +291,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-members/{m_id}",
+            "endpoint": "/v1/party-management/party-members/{m_id}",
             "input_headers": [
                 "*"
               ],
@@ -309,7 +309,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-members",
+            "endpoint": "/v1/party-management/party-members",
             "input_headers": [
                 "*"
               ],
@@ -327,7 +327,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-information/{p_id}",
+            "endpoint": "/v1/party-management/party-information/{p_id}",
             "input_headers": [
                 "*"
               ],
@@ -345,7 +345,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-information/{p_id}",
+            "endpoint": "/v1/party-management/party-information/{p_id}",
             "input_headers": [
                 "*"
               ],
@@ -363,7 +363,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/party-information/{p_id}",
+            "endpoint": "/v1/party-management/party-information/{p_id}",
             "input_headers": [
                 "*"
               ],
@@ -381,7 +381,7 @@
             }]
         },
         {
-            "endpoint": "/v1/party-managment/user/{uuid}/status",
+            "endpoint": "/v1/party-management/user/{uuid}/status",
             "input_headers": [
                 "*"
               ],
