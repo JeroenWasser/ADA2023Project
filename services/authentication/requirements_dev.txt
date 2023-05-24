@@ -1,6 +1,6 @@
+enum
 flask
-flask_httpauth
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
-google-cloud-pubsub
+pytest

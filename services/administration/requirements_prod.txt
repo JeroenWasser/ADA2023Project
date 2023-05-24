@@ -2,3 +2,5 @@ flask
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
+uuid
+google-cloud-pubsub

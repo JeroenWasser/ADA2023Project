@@ -3,3 +3,5 @@ flask_httpauth
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
+requests
+google-cloud-pubsub
