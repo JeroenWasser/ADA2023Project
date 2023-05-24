@@ -62,12 +62,13 @@ def delete_voting_session(vs_id):
         return jsonify('id must be an integer'), 500
     return VotingSession.delete(vs_id)
 
-
+# Tested
 @app.route('/parties/placeholder', methods=['POST'])
 def create_placeholder_party():
     body = request.json
     return Party.create(body)
 
+# Tested
 @app.route('/parties/<p_id>/admin', methods=['POST'])
 def create_party_admin(p_id):
     try:
@@ -98,7 +99,7 @@ def create_party_admin(p_id):
         return jsonify({'message': 'Could not create party admin, try again'}), 500
     return jsonify({'message': 'Could not create party admin, try again'}), 500
 
-
+#Tested
 @app.route('/parties/<p_id>', methods=['PUT'])
 def update_party(p_id):
     try:
